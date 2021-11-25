@@ -28,7 +28,7 @@
   
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2421060_cksn56jaae6.css">
   
-  <link rel="stylesheet" href="/css/style.css?v=1637831215852">
+  <link rel="stylesheet" href="/css/style.css?v=1637856054639">
   <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
@@ -190,16 +190,6 @@
         <article>
             
                 <h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><p>Cookie：客户端会话技术，将数据保存到客户端，以后每次请求都携带Cookie数据进行访问，它是基于HTTP协议实现.</p>
-<h1 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h1><p>服务端会话跟踪技术：将数据保存到服务端</p>
-<p>它是基于Cookie的</p>
-<p>Tomcat会将封装一个COOKIE 存储session的id值进去(JSESSIONID)，而不是数据</p>
-<h3 id="Session-使用细节"><a href="#Session-使用细节" class="headerlink" title="Session 使用细节"></a>Session 使用细节</h3><h4 id="1-Session钝化，活化"><a href="#1-Session钝化，活化" class="headerlink" title="1 Session钝化，活化"></a>1 Session钝化，活化</h4><p>服务器重启后，Session中的数据依旧存在</p>
-<p>钝化：服务器正常关闭后，Tomcat会自动将数据写入硬盘</p>
-<p>活化：再次启动服务器后，从文件中加载数据到Session中</p>
-<p>以上过程有Tomcat自动完成</p>
-<h4 id="Session-销毁"><a href="#Session-销毁" class="headerlink" title="Session 销毁"></a>Session 销毁</h4><p>默认情况下，无操作，30分钟自动销毁</p>
-<p>或者调用Session的invalidate()</p>
-
             
         </article>
     </div>
@@ -216,7 +206,7 @@
         
         <div class="nexmoe-post-meta nexmoe-rainbow">
             <a><i class="nexmoefont icon-calendar-fill"></i>2021年11月23日</a>
-            <a><i class="nexmoefont icon-areachart"></i>122 字</a>
+            <a><i class="nexmoefont icon-areachart"></i>235 字</a>
             <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
         </div>
 
@@ -239,13 +229,17 @@
         
         <div class="nexmoe-post-meta nexmoe-rainbow">
             <a><i class="nexmoefont icon-calendar-fill"></i>2021年11月23日</a>
-            <a><i class="nexmoefont icon-areachart"></i>0 字</a>
+            <a><i class="nexmoefont icon-areachart"></i>79 字</a>
             <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
         </div>
 
         <article>
             
-                
+                <h1 id="Spring开发步骤"><a href="#Spring开发步骤" class="headerlink" title="Spring开发步骤"></a>Spring开发步骤</h1><p>1 导入Spring开发的基本包坐标</p>
+<p>2 编写DAO接口和实现类</p>
+<p>3 创建Spring核心配置文件</p>
+<p>4 在Spring配置文件中配置UserDaoImpl</p>
+<p>5 使用Spring的API获取bean实例（反射）</p>
             
         </article>
     </div>
@@ -1126,7 +1120,7 @@
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 
 
-<script src="/js/app.js?v=1637831215854"></script>
+<script src="/js/app.js?v=1637856054640"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
