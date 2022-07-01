@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  
+  <meta name="baidu-site-verification" content="code-J1Qg17G6wT" />
+  <title>netty - 故郷に帰る夢</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+    <!-- Site Verification -->
+    <meta name="baidu-site-verification" content="code-J1Qg17G6wT" />
+
+  <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/head/head.jpg" type="image/png" />
+  <meta name="description" content="Netty概念Netty是一个异步的，基于事件驱动的网络应用框架，用以快速开发高性能，高可靠性的网络IO程序。主要针对在TCP协议下，面向客户端的高并发应用，或者Peer-to-peer场景下的大量数据持续传输的应用，本质上是一个NIO框架，适用于服务器通讯相关的多种应用场景">
+<meta property="og:type" content="article">
+<meta property="og:title" content="netty">
+<meta property="og:url" content="http://example.com/2022/02/08/netty/index.html">
+<meta property="og:site_name" content="故郷に帰る夢">
+<meta property="og:description" content="Netty概念Netty是一个异步的，基于事件驱动的网络应用框架，用以快速开发高性能，高可靠性的网络IO程序。主要针对在TCP协议下，面向客户端的高并发应用，或者Peer-to-peer场景下的大量数据持续传输的应用，本质上是一个NIO框架，适用于服务器通讯相关的多种应用场景">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/1.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/2.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/3.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/4.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/5.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/6.png">
+<meta property="og:image" content="http://example.com/2022/02/08/netty/7.png">
+<meta property="article:published_time" content="2022-02-08T14:47:14.000Z">
+<meta property="article:modified_time" content="2022-06-27T15:30:09.571Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/02/08/netty/1.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
+  
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2421060_cksn56jaae6.css">
+  
+  <link rel="stylesheet" href="/css/style.css?v=1656682652769">
+  <script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/background/xiaomai.jpg)"></div>
+    <div class="nexmoe-small" style="background-image: url(https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/background/lihui.png)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="John Doe" class="mdui-btn mdui-btn-icon"><img src="https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/head/head.jpg" alt="John Doe"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="John Doe">
+            <img src="https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/head/head.jpg" alt="John Doe" alt="John Doe">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div class="nexmoe-count-item"><span>Articles</span>13 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
+        <div class="nexmoe-count-item"><span>Tags</span>0<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+        <div class="nexmoe-count-item"><span>Categories</span>0<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-meishi"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/archives.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-hanbao1"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于本人">
+            <i class="mdui-list-item-icon nexmoefont icon-jiubei1"></i>
+            <div class="mdui-list-item-content">
+                关于本人
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/friend.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-cola"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  
+<!-- 站内搜索 -->
+
+<div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search" >
+        <form id="search-form">
+            <label><input type="text" id="local-search-input" name="q" results="0" placeholder="站内搜索" class="input form-control" autocomplete="off" autocorrect="off"/></label>
+            <!-- 清空/重置搜索框 -->
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+        </form>
+    </div>
+    <div id="local-search-result"></div> <!-- 搜索结果区 -->
+    <!-- <p class='no-result'></p> 无匹配时显示，注意在 CSS 中设置默认隐藏 -->
+</div>
+
+
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="http://wpa.qq.com/msgrd?v=3&uin=1494399379&site=qq&menu=yes" target="_blank" mdui-tooltip="{content: 'QQ'}" style="color: rgb(64, 196, 255);background-color: rgba(64, 196, 255, .1);">
+            <i class="nexmoefont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="mailto:tangyuxian@vip.qq.com" target="_blank" mdui-tooltip="{content: 'mail'}" style="color: rgb(249,8,8);background-color: rgba(249,8,8,.1);">
+            <i class="nexmoefont icon-mail-fill"></i>
+        </a><a class="mdui-ripple" href="https://www.cnblogs.com/lovetangyuxian/" target="_blank" mdui-tooltip="{content: '博客园'}" style="color: rgb(66, 214, 29);background-color: rgba(66, 214, 29, .1);">
+            <i class="nexmoefont icon-bokeyuan"></i>
+        </a><a class="mdui-ripple" href="https://github.com/liaoke246" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="https://gitee.com/liaoke246" target="_blank" mdui-tooltip="{content: 'gitee'}" style="color: rgb(255, 255, 255);background-color: rgb(199,29,35);">
+            <i class="nexmoefont icon-mayun"></i>
+        </a>
+    </div>
+</div>
+  
+  
+
+  
+  
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Archive</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/">2021</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+<style>
+.nexmoe-widget .archive-list-count{
+	position : absolute;
+	right: 15px;
+	top:9px;
+	color: #DDD;
+}
+</style>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2022 John Doe
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/tangyuxian/hexo-theme-tangyuxian" target="_blank">Tangyuxian</a><br/>
+        <a href="http://beian.miit.gov.cn" target="_blank"></a><br/>
+        
+        <div style="font-size: 12px">
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量  <a id="busuanzi_value_site_pv"></a> 次<br />
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+        
+        
+    </div>
+
+</div><!-- .nexmoe-drawer -->
+
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+    
+        <div class="nexmoe-post-cover"
+             style="padding-bottom: 24.305555555555554%;">
+            <img data-src="https://cdn.jsdelivr.net/gh/tangyuxian/blog_image@master/background/xiaomai.jpg" data-sizes="auto" alt="netty" class="lazyload">
+            <h1>netty</h1>
+        </div>
+    
+
+        <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2022年02月08日</a>
+    <a><i class="nexmoefont icon-areachart"></i>3.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 14 分钟</a>
+</div>
+
+        <div class="nexmoe-post-right">
+            
+        </div>
+
+        <article>
+            <h1 id="Netty概念"><a href="#Netty概念" class="headerlink" title="Netty概念"></a>Netty概念</h1><p>Netty是一个异步的，基于事件驱动的网络应用框架，用以快速开发高性能，高可靠性的网络IO程序。主要针对在TCP协议下，面向客户端的高并发应用，或者Peer-to-peer场景下的大量数据持续传输的应用，本质上是一个NIO框架，适用于服务器通讯相关的多种应用场景</p>
+<span id="more"></span>
+
+
+
+<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><p>I/O模型简单的理解：就是用什么样的通道进行数据的发送和接收，很大程度上决定了通信的性能</p>
+<p>JAVA共支持三种网络编程模型：BIO NIO AIO</p>
+<h3 id="Java-BIO"><a href="#Java-BIO" class="headerlink" title="Java BIO"></a>Java BIO</h3><p>同步并阻塞（传统阻塞型），服务器实现模式为一个连接一个线程，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销</p>
+<h3 id="Java-NIO"><a href="#Java-NIO" class="headerlink" title="Java NIO"></a>Java NIO</h3><p>同步非阻塞，服务器实现模式为一个线程处理多个请求(连接)，即客户端发送的连接请求都会注册到多路复用器(Selector)上，多路复用器轮询到连接有I/O请求就进行处理</p>
+<h3 id="Java-AIO"><a href="#Java-AIO" class="headerlink" title="Java AIO"></a>Java AIO</h3><p>异步非阻塞，IO引入了异步通道的概念，采用了Proactor模式，简化了程序编写，有效的请求才启动线程，它的特点是由操作系统完成后才通知服务端程序启动线程去处理，一般适用于连接数较多且连接时间比较长的应用。</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p><img src="/2022/02/08/netty/1.png"></p>
+<h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>1.当客户端连接时，会通过ServerSocketChannel得到对应的SocketChannel。</p>
+<p>2.将socketChannel注册到Selector上（一个selection上可以注册多个通道）</p>
+<p>3注册后返回一个selectionkey,会和该selector关联</p>
+<p>4selector可以进行监听 用select方法,返回有事件发生的通道的个数</p>
+<p>5,进而再次各个Selectionkey（有事件发生的）</p>
+<p>6,再通过selectionkey反向获取注册的socketChannel.</p>
+<p>三大核心 </p>
+<p>Channel(通道)      Buffer（缓冲区）  Selector（选择器）</p>
+<p>NIO是<strong>面向缓冲区</strong>，或者面向块编程的，数据读到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动，这就增加了处理过程的灵活性，使用它可以提供非阻塞式的高伸缩网络</p>
+<p>客户端和Buffer互相读写，Buffer和Channel互相读写。</p>
+<h3 id="Buffer缓冲区"><a href="#Buffer缓冲区" class="headerlink" title="Buffer缓冲区"></a>Buffer缓冲区</h3><p>本质上是一块可以写入数据，然后可以从中读取数据的内存，这块内存包装成NIO Buffer对象并提供了一组方法来方便访问该块内存，相比于直接对数组的操作，Buffer API更加容易操作和管理</p>
+<h3 id="Channel（通道）"><a href="#Channel（通道）" class="headerlink" title="Channel（通道）"></a>Channel（通道）</h3><p>JAVA NIO的通道类似流，但又有些不同，既可以从通道中读取数据，又可以写数据到通道。但流的（input或output）读写通常是单向的。通道可以非阻塞读取和写入通道，通道可以支持读取或者写入缓冲区，也支持异步地读写。</p>
+<h3 id="Selector选择器"><a href="#Selector选择器" class="headerlink" title="Selector选择器"></a>Selector选择器</h3><p>它是一个java NIO 组件，可以能够检查一个或多个NIO通道，并确定哪些通道已经准备好进行读取或写入。这样，一个单独的线程可以管理多个channel，从而管理多个网络连接，提高效率</p>
+<p><img src="/2022/02/08/netty/2.png"></p>
+<p>程序的切换是由事件决定的</p>
+<p>Buffer就是一个内存区，底层是数组</p>
+<h2 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h2><p>重要概念</p>
+<p>容量(capacity)</p>
+<p>限制(limit)</p>
+<p>位置(position)</p>
+<p>标记(mark)与重置(reset)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个大小为5的buffer，可以存放五个int。</span></span><br><span class="line">        IntBuffer allocate = IntBuffer.allocate(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//allocate.capacity()获取buffer的大小</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;allocate.capacity();i++)&#123;</span><br><span class="line">            allocate.put(<span class="number">5</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//从buffer读取数据</span></span><br><span class="line">        <span class="comment">//将buffer转换，读写切换，必须用这个操作(翻转)</span></span><br><span class="line">        allocate.flip();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (allocate.hasRemaining())&#123;</span><br><span class="line">            System.out.println(allocate.get());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h2><p>在NIO中是一个接口</p>
+<p>常用的Channel类有 FileChannel （用于文件） DatagramChannel（用于UDP的数据读写），ServerSocketChannel（用于TCP），SocketChannel（用于TCP）</p>
+<p>SSC类似java里面的serverSocketsocket ，SC类似java里的s</p>
+<p>常用方法</p>
+<p>read()   write()缓冲区到通道</p>
+<p>transferFrom()</p>
+<p>transferTo()</p>
+<h2 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h2><p>多个Channel以事件的方式注册到同一个selector</p>
+<p>通道有事件发生就会拿到一个selectionkey，selector遍历所有key，反向得到所有通道.</p>
+<p>相关方法说明</p>
+<p>selector.select()//阻塞</p>
+<p>selector.select(1000)//阻塞1000ms，之后返回</p>
+<p>selector.wakeup();//唤醒selector</p>
+<p>selector</p>
+<p>selectorNow()//不阻塞，立马返还.</p>
+<h1 id="服务端代码实例"><a href="#服务端代码实例" class="headerlink" title="服务端代码实例"></a>服务端代码实例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NIOserver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//创建serversocketchannel</span></span><br><span class="line">        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//得到一个Selector对象</span></span><br><span class="line">        Selector selector = Selector.open();</span><br><span class="line">        <span class="comment">//绑定一个端口，在服务端监听</span></span><br><span class="line">        serverSocketChannel.socket().bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">6666</span>));</span><br><span class="line">        <span class="comment">//设置为非阻塞</span></span><br><span class="line">        serverSocketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">        <span class="comment">//把SSC注册到selector,关心事件为OP_ACCEPT</span></span><br><span class="line">        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line">        <span class="comment">//循环等待客户端连接</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            <span class="comment">//等待一秒钟，没事件发生就继续.</span></span><br><span class="line">            <span class="keyword">if</span>(selector.select(<span class="number">1000</span>) == <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="comment">//没有事件发生</span></span><br><span class="line">                System.out.println(<span class="string">&quot;服务器等了一秒，无连接&quot;</span>);</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;<span class="comment">//如果返回的大于零获取相关的selection集合</span></span><br><span class="line">            <span class="comment">//大于零，表示已经获取到关注的事件。</span></span><br><span class="line">            <span class="comment">//selector.selectedkey()返回关注事件的集合</span></span><br><span class="line">            <span class="comment">//通过selectionkeys,获取通道</span></span><br><span class="line">            Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//遍历set，使用迭代器</span></span><br><span class="line">            <span class="keyword">final</span> Iterator&lt;SelectionKey&gt; iterator = selectionKeys.iterator();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">                <span class="comment">//获取key</span></span><br><span class="line">                <span class="keyword">final</span> SelectionKey key = iterator.next();</span><br><span class="line">                <span class="comment">//根据key对应的通道发生的事件做不同的处理</span></span><br><span class="line">                <span class="keyword">if</span>(key.isAcceptable())&#123;</span><br><span class="line">                    <span class="comment">//如果是连接,应该生成Socketchannel</span></span><br><span class="line">                    SocketChannel socketChannel = serverSocketChannel.accept();</span><br><span class="line">                    <span class="comment">//注册到selector,关注事件为read，同时给通道关联一个buffer</span></span><br><span class="line">                   socketChannel.configureBlocking(<span class="keyword">false</span>); socketChannel.register(selector,SelectionKey.OP_READ,ByteBuffer.allocate(<span class="number">1024</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(key.isReadable())&#123;</span><br><span class="line">                    <span class="comment">//发生了read事件</span></span><br><span class="line">                    <span class="comment">//通过key反向获取对应的channel</span></span><br><span class="line">                    SocketChannel channel = (SocketChannel)key.channel();</span><br><span class="line">                    <span class="comment">//获取到该channel关联的buffer</span></span><br><span class="line">                    ByteBuffer buffer = (ByteBuffer)key.attachment();</span><br><span class="line"></span><br><span class="line">                    channel.read(buffer);</span><br><span class="line">                    System.out.println(<span class="string">&quot;客户端发送&quot;</span>+<span class="keyword">new</span> String(buffer.array()));</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//手动从集合中移除key,防止重复操作。</span></span><br><span class="line">                iterator.remove();</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="客户端代码实例"><a href="#客户端代码实例" class="headerlink" title="客户端代码实例"></a>客户端代码实例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NIOclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//得到一个网络通道</span></span><br><span class="line">        SocketChannel socketChannel = SocketChannel.open();</span><br><span class="line">        <span class="comment">//设置非阻塞</span></span><br><span class="line">        socketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">        <span class="comment">//提供服务器端的ip和端口</span></span><br><span class="line">        InetSocketAddress inetSocketAddress = <span class="keyword">new</span> InetSocketAddress(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">6666</span>);</span><br><span class="line">        <span class="comment">//连接服务器</span></span><br><span class="line">        <span class="keyword">if</span>(!socketChannel.connect(inetSocketAddress))&#123;</span><br><span class="line">            <span class="comment">//如果没有成功</span></span><br><span class="line">            <span class="keyword">while</span> (!socketChannel.finishConnect())&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;因为连接需要时间，客户端可以做其他工作&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//连接成功就发送数据</span></span><br><span class="line">        String str = <span class="string">&quot;111&quot;</span>;</span><br><span class="line">        <span class="comment">//根据字节数组大小直接放进buffer，非常好用的方法</span></span><br><span class="line">        ByteBuffer byteBuffer = ByteBuffer.wrap(str.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        <span class="comment">//发送数据,将buffer写入channel</span></span><br><span class="line">        socketChannel.write(byteBuffer);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        System.in.read();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="netty开始"><a href="#netty开始" class="headerlink" title="netty开始"></a>netty开始</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.netty&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;netty-all&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.1.39.Final&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>服务端代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Server</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1.服务器端的启动器,负责组装netty组件，协调他们的工作让他们启动起来</span></span><br><span class="line">        <span class="keyword">new</span> ServerBootstrap()</span><br><span class="line">                .group(<span class="keyword">new</span> NioEventLoopGroup())<span class="comment">//2.BossEventLoop,WorkerEvenLoop(selector,thread),group组</span></span><br><span class="line">                .channel(NioServerSocketChannel.class)<span class="comment">//3.选择服务器的ssc实现</span></span><br><span class="line">                <span class="comment">//4.boos负责处理链接 worker负责处理读写,决定了worker(child)能执行哪些操作(handler)</span></span><br><span class="line">                .childHandler(</span><br><span class="line">                        <span class="comment">//5.跟客户端进行数据读写的通道 Initializer初始化,负责添加别的handler</span></span><br><span class="line">                        <span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel nioSocketChannel)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                        <span class="comment">//6.添加具体handler</span></span><br><span class="line">                            nioSocketChannel.pipeline().addLast(<span class="keyword">new</span> StringDecoder());<span class="comment">//将bytebuf转换为字符串</span></span><br><span class="line">                            nioSocketChannel.pipeline().addLast(<span class="keyword">new</span> ChannelInboundHandlerAdapter() &#123;<span class="comment">//自定义hander</span></span><br><span class="line">                                <span class="meta">@Override</span><span class="comment">//读事件</span></span><br><span class="line">                                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx,Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                                    <span class="comment">//打印上一步转换好的字符串</span></span><br><span class="line">                                    System.out.println(msg);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">//绑定监听端口</span></span><br><span class="line">                .bind(<span class="number">8080</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        <span class="comment">//创建启动器类</span></span><br><span class="line">        <span class="keyword">new</span> Bootstrap()</span><br><span class="line">                <span class="comment">//2.添加Evenloop</span></span><br><span class="line">        .group(<span class="keyword">new</span> NioEventLoopGroup())</span><br><span class="line">                <span class="comment">//3.选择客户端的channel实现</span></span><br><span class="line">        .channel(NioSocketChannel.class)</span><br><span class="line">        <span class="comment">//4.添加处理器</span></span><br><span class="line">        .handler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span><span class="comment">//在连接建立后调用</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel nioSocketChannel)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;连上咯&quot;</span>);</span><br><span class="line">                    nioSocketChannel.pipeline().addLast(<span class="keyword">new</span> StringEncoder());<span class="comment">//解码</span></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">&quot;localhost&quot;</span>,<span class="number">8080</span>))</span><br><span class="line">                .sync()<span class="comment">//阻塞方法，直到连接建立</span></span><br><span class="line">                .channel()</span><br><span class="line">                <span class="comment">//向服务器发数据</span></span><br><span class="line">                .writeAndFlush(<span class="string">&quot;hello world&quot;</span>);</span><br><span class="line"></span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/02/08/netty/3.png"></p>
+<h1 id="netty组件"><a href="#netty组件" class="headerlink" title="netty组件"></a>netty组件</h1><h2 id="1-EventLoop"><a href="#1-EventLoop" class="headerlink" title="1.EventLoop"></a>1.EventLoop</h2><p>事件循环对象</p>
+<p>本质上是一个单线程执行器（同时维护了一个selector）里面有run方法处理Channel上源源不断的io事件</p>
+<p>事件循环组</p>
+<p>EventLoopGroup是一组EventLoop，Channel一般会调用EventLoopGroup的register方法来绑定其中一个EventLoop，后续这个Channel上的IO事件都由此EventLoop来处理（保证了io事件处理时的线程安全）</p>
+<p><img src="/2022/02/08/netty/4.png"></p>
+<h2 id="2-Channel"><a href="#2-Channel" class="headerlink" title="2.Channel"></a>2.Channel</h2><p>主要的作用</p>
+<ul>
+<li><p>close()可以用来关闭channel</p>
+</li>
+<li><p>closeFuture()可以用来处理channel的关闭</p>
+<ul>
+<li>sync方法是同步等待channel关闭</li>
+<li>而addListener方法是异步等待channel关闭</li>
+</ul>
+</li>
+<li><p>pipeline()方法是添加处理器</p>
+</li>
+<li><p>write()方法将数据写入</p>
+</li>
+<li><p>writeAndFlus()方法是将数据写入并且刷出</p>
+</li>
+</ul>
+<p>connect方法是异步调用，也就是说main线程调用这个方法后不关心结果如何，继续往下执行，而这个方法具体执行是由NIO线程来干的，NIO现充由eventloop产生</p>
+<h2 id="3-Future-amp-Promise"><a href="#3-Future-amp-Promise" class="headerlink" title="3.Future&amp;Promise"></a>3.Future&amp;Promise</h2><p>在异步处理时，经常用到这两个接口</p>
+<p>首先要说明的是netty中的Future与jdk中的future同名，但是是两个接口，netty的Future继承自jdk的Future，而Promise又对netty Future进行了扩展</p>
+<ul>
+<li>jdk Future只能同步等待任务结束（成功或失败）才能得到结果</li>
+<li>netty Future (继承于jdk的future)可以同步等待任务结束得到结果，也可以异步方式得到结果，但都要等到任务结束</li>
+<li>netty Promise 不仅有 netty Future的功能，而且也脱离了任务独立存在，只作为两个线程之间传递的容器</li>
+</ul>
+<p>DefaultPromise<T></T></p>
+<h2 id="4-Handler-amp-Pipeline"><a href="#4-Handler-amp-Pipeline" class="headerlink" title="4.Handler&amp;Pipeline"></a>4.Handler&amp;Pipeline</h2><p>CTX.是从当前入栈处理器往前找出栈处理器</p>
+<p>channel.是中尾部往前找出栈处理器</p>
+<h2 id="5-ByteBuf"><a href="#5-ByteBuf" class="headerlink" title="5.ByteBuf"></a>5.ByteBuf</h2><p>ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();</p>
+<p>netty的buf可以自动扩容，比nio的强大多了</p>
+<h4 id="2-直接内存-VS-堆内存"><a href="#2-直接内存-VS-堆内存" class="headerlink" title="2) 直接内存 VS 堆内存"></a>2) 直接内存 VS 堆内存</h4><p>可以使用下面的代码来创建池化基于堆的ByteBuf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buffer = ByteBufAllocator.DEFAULT.heapBuffer(10)</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用下面的代码来创建池化基于直接内存的ByteBuf</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buffer = ByteBufAllocator.DEFAULT.directBuffer(10)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接内存创建和销毁的代价昂贵，但读写性能高(少一次内存复制),适合配合池化功能一起用</li>
+<li>直接内存对GC压力小，因为这部分内存不收JVM垃圾回收的管理，但也要注意及时主动释放</li>
+</ul>
+<h4 id="3-池化-vs-非池化"><a href="#3-池化-vs-非池化" class="headerlink" title="3) 池化 vs 非池化"></a>3) 池化 vs 非池化</h4><p>池化的最大意义在于可以重用ByteBuf,优点有</p>
+<ul>
+<li>没有池化，则每次都得创建新的ByteBuf实例，这个操作对直接内存代价昂贵，就算是堆内存，也增加GC压力</li>
+<li>有了池化，则可以重用池中ByteBuf 实例，并且采用了与jemalloc类似的内存分配算法提升分配效率</li>
+<li>高并发时，池化功能更节约内存，减少内存溢出的可能</li>
+</ul>
+<p>池化功能是否开启，可以通过下面的系统环境变量来设置</p>
+<h4 id="4-常用读取"><a href="#4-常用读取" class="headerlink" title="4)常用读取"></a>4)常用读取</h4><p><img src="/2022/02/08/netty/5.png"></p>
+<h4 id="5-retain-amp-release"><a href="#5-retain-amp-release" class="headerlink" title="5) retain &amp; release"></a>5) retain &amp; release</h4><p>netty中有堆外内存的ByteBuf实现，堆外内存最好是手动释放，而不是等GC回收</p>
+<ul>
+<li>UnpooledHeapByteBuf 使用JVM内存，只需等GC回收内存即可</li>
+<li>UnpooledDirectByteBuf 使用的就是直接内存了，需要特殊的方法来回收内存</li>
+<li>PooledByteBuf 和它的子类是用来池化机制，需要更复杂的规则来回收内存</li>
+</ul>
+<p><img src="/2022/02/08/netty/6.png"></p>
+<h4 id="6）slice"><a href="#6）slice" class="headerlink" title="6）slice"></a>6）slice</h4><p>零拷贝的体现之一，切片后的ByteBuf并没有发生内存复制，还是使用原始的ByteBuf的内存，切片后的ByteBuf维护独立的read，write指针</p>
+<p>slice(第一个参数是切片起点，第二个要切多长)</p>
+<p>例如slice(0,5)</p>
+<p>切片后不能增加数据了</p>
+<h1 id="粘包半包"><a href="#粘包半包" class="headerlink" title="粘包半包"></a>粘包半包</h1><p>本质都是因为TCP是流式的协议，消息无边际</p>
+<h4 id="粘包"><a href="#粘包" class="headerlink" title="粘包"></a>粘包</h4><p>发送 abc  def 接受变成 abcdef</p>
+<p>原因：应用层：接收方Bytebuf太大（netty默认1024）</p>
+<p>​            滑动窗口</p>
+<p>​            nagle算法：会造成粘包</p>
+<h4 id="半包"><a href="#半包" class="headerlink" title="半包"></a>半包</h4><p>发送 abcdef 接受变成 abc   cdf</p>
+<p>原因 ：MSS</p>
+<p>​            应用层</p>
+<p>​            滑动窗口</p>
+<h1 id="自定义协议"><a href="#自定义协议" class="headerlink" title="自定义协议"></a>自定义协议</h1><h3 id="要素"><a href="#要素" class="headerlink" title="要素"></a>要素</h3><ul>
+<li>魔数，用在第一时间判定是否是无效化数据包</li>
+<li>版本号：可以支持协议的升级</li>
+<li>序列号算法，消息正文到底采用那种序列化反序列化方式，由此可以扩展，例如json protobuf，hessian，jdk。</li>
+<li>指令协议，是登录，注册，单聊，群聊…跟业务有关</li>
+<li>请求序号，为了双工通信，提供异步能力</li>
+<li>正文长度</li>
+<li>消息正文</li>
+</ul>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="/2022/02/08/netty/7.png" alt="image-20220627153404045" class="lazyload"></p>
+<p>帧解码器解决粘包半包 LengthFieldBasedFrameDecoder(1024,24,4,0,0)</p>
+
+        </article>
+
+        
+            
+
+        
+
+        <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+    
+</div>
+
+    <div class="nexmoe-post-footer">
+        <section class="nexmoe-comment">
+    <div class="valine"></div>
+<script src='https://cdn.jsdelivr.net/npm/valine@1.3.9/dist/Valine.min.js'></script>
+<script>
+    // 使用方法 https://valine.js.org/quickstart.html
+    new Valine({
+        el: '.valine',
+        appId: 'r5zxC0st0DDjPA9auXzMV7HY-gzGzoHsz',
+        appKey: '3bqCsovpyfTPHUzTHovd3V3V'
+    })
+</script>
+</section>
+    </div>
+</div>
+
+
+        <div class="nexmoe-post-right">
+          
+            <div class="nexmoe-fixed">
+              <div class="nexmoe-tool">
+                <a href="#" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+              </div>
+            </div>
+          
+        </div>
+    </div>
+  </div>
+  <div id="nexmoe-pendant">
+    <div class="nexmoe-drawer mdui-drawer nexmoe-pd" id="drawer">
+        
+            <div class="nexmoe-pd-item">
+                <div class="clock">
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="memory"></div>
+        <div class="needle" id="hours"></div>
+        <div class="needle" id="minutes"></div>
+        <div class="needle" id="seconds"></div>
+        <div class="clock_logo">
+
+        </div>
+
+    </div>
+<style>
+    .clock {
+        background-color: #ffffff;
+        width: 70vw;
+        height: 70vw;
+        max-width: 70vh;
+        max-height: 70vh;
+        border: solid 2.8vw #242424;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: 0 1.4vw 2.8vw rgba(0, 0, 0, 0.8);
+        zoom:0.2
+    }
+
+    .memory {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
+
+    .memory:nth-child(1) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-520%);
+    }
+
+    .memory:nth-child(2) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(6deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(3) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(12deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(4) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(18deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(5) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(24deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(6) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(30deg) translateY(-520%);
+    }
+
+    .memory:nth-child(7) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(36deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(8) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(42deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(9) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(48deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(10) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(54deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(11) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(60deg) translateY(-520%);
+    }
+
+    .memory:nth-child(12) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(66deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(13) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(72deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(14) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(78deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(15) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(84deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(16) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-520%);
+    }
+
+    .memory:nth-child(17) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(96deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(18) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(102deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(19) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(108deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(20) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(114deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(21) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(120deg) translateY(-520%);
+    }
+
+    .memory:nth-child(22) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(126deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(23) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(132deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(24) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(138deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(25) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(144deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(26) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(150deg) translateY(-520%);
+    }
+
+    .memory:nth-child(27) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(156deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(28) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(162deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(29) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(168deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(30) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(174deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(31) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-520%);
+    }
+
+    .memory:nth-child(32) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(186deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(33) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(192deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(34) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(198deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(35) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(204deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(36) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(210deg) translateY(-520%);
+    }
+
+    .memory:nth-child(37) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(216deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(38) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(222deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(39) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(228deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(40) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(234deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(41) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(240deg) translateY(-520%);
+    }
+
+    .memory:nth-child(42) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(246deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(43) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(252deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(44) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(258deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(45) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(264deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(46) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(270deg) translateY(-520%);
+    }
+
+    .memory:nth-child(47) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(276deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(48) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(282deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(49) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(288deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(50) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(294deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(51) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(300deg) translateY(-520%);
+    }
+
+    .memory:nth-child(52) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(306deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(53) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(312deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(54) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(318deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(55) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(324deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(56) {
+        background-color: #424242;
+        width: 2%;
+        height: 8%;
+        transform: translate(-50%, -50%) rotate(330deg) translateY(-520%);
+    }
+
+    .memory:nth-child(57) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(336deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(58) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(342deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(59) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(348deg) translateY(-1461%);
+    }
+
+    .memory:nth-child(60) {
+        background-color: #949494;
+        width: 1%;
+        height: 3%;
+        transform: translate(-50%, -50%) rotate(354deg) translateY(-1461%);
+    }
+
+    .needle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center;
+    }
+
+    .needle#hours {
+        background-color: #1f1f1f;
+        width: 4%;
+        height: 30%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#hours.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#hours:after {
+        content: '';
+        background-color: #1f1f1f;
+        width: 4vw;
+        height: 4vw;
+        max-width: 4vh;
+        max-height: 4vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .needle#minutes {
+        background-color: #1f1f1f;
+        width: 2%;
+        height: 45%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#minutes.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#minutes:after {
+        content: '';
+        background-color: #1f1f1f;
+        width: 4vw;
+        height: 4vw;
+        max-width: 4vh;
+        max-height: 4vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .needle#seconds {
+        background-color: #cb2f2f;
+        width: 1%;
+        height: 50%;
+        transform-origin: center 75%;
+        transform: translate(-50%, -75%);
+    }
+
+    .needle#seconds.moving {
+        transition: transform 150ms ease-out;
+    }
+
+    .needle#seconds:after {
+        content: '';
+        background-color: #cb2f2f;
+        width: 2.5vw;
+        height: 2.5vw;
+        max-width: 2.5vh;
+        max-height: 2.5vh;
+        display: block;
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .clock_logo{
+        width: 10vw;
+        height: 10vw;
+        max-width: 10vh;
+        max-height: 10vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        box-sizing: border-box;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+    @media (min-width: 100vh) {
+        .clock {
+            border: solid 2.8vh #242424;
+            box-shadow: 0 1.4vh 2.8vh rgba(0, 0, 0, 0.8);
+        }
+    }
+
+</style>
+
+
+
+
+
+            </div>
+        
+            <div class="nexmoe-pd-item">
+                <div class="qweather" >
+    <div id="he-plugin-standard"></div>
+    <div class="qweather-logo">
+
+    </div>
+
+</div>
+<style>
+    .qweather{
+        position: relative;
+    }
+    .qweather-logo{
+        position: absolute;
+        right: 0;
+        top: -15px;
+        width: 40px;
+        height: 40px;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+</style>
+<script>
+  WIDGET = {
+    "CONFIG": {
+      "layout": "2",
+      "width": "260",
+      "height": "220",
+      "background": "5",
+      "dataColor": "e67249",
+      "borderRadius": "15",
+      "key": "f74d1e1690e6432d801e97fa2f05a162"
+    }
+  }
+</script>
+<script src="https://widget.qweather.net/standard/static/js/he-standard-common.js?v=2.0"></script>
+
+            </div>
+        
+</div>
+<style>
+    .nexmoe-pd {
+        left: auto;
+        top: 40px;
+        right: 0;
+    }
+    .nexmoe-pd-item{
+       display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+</style>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="/js/app.js?v=1656682652770"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+
+
+
+
+<!-- hexo injector body_end start -->
+<script src="/js/clock.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+
+<script src="/lib/codeBlock/codeBlockFuction.js"></script>
+
+<script src="/lib/codeBlock/codeLang.js"></script>
+
+<script src="/lib/codeBlock/codeCopy.js"></script>
+
+<script src="/lib/codeBlock/codeShrink.js"></script>
+
+<link rel="stylesheet" href="/lib/codeBlock/matery.css">
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+<script src="/js/search.js"></script>
+
+<script src="/js/webapp.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>
+
